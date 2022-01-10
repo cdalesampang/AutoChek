@@ -2,30 +2,41 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<img class="img-fluid logo-dark mb-2" src="~/Content/template/assets/img/logo.png" alt="Logo">
+<div class="loginbox">
+    <div class="login-right">
+        <div class="login-right-wrap">
+            <h1>Login</h1>
+            <p class="account-subtitle">Access to our dashboard</p>
+            <form action="https://kanakku.dreamguystech.com/html/template/index.html">
+                <div class="form-group">
+                    <label class="form-control-label">Username</label>
+                    <input type="email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">Password</label>
+                    <div class="pass-group">
+                        <input type="password" class="form-control pass-input">
+                        <span class="fas fa-eye toggle-password"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="cb1">
+                                <label class="custom-control-label" for="cb1">Remember me</label>
+                            </div>
+                        </div>
+                        <div class="col-6 text-end">
+                            <a class="forgot-link" href="forgot-password.html">Forgot Password ?</a>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-lg btn-block btn-primary w-100" type="submit">Login</button>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+                <div class="text-center dont-have">Don't have an account yet? <a href="register.html">Register</a></div>
+            </form>
+        </div>
     </div>
 </div>
