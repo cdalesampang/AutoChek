@@ -46,6 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net-Next, Version=4.0.2.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>packages\BCrypt.Net-Next.4.0.2\lib\net48\BCrypt.Net-Next.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -54,8 +57,21 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -128,12 +144,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Data\AutoCheckDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AdminSecurityAttribute.cs" />
     <Compile Include="Helpers\BaseEntity.cs" />
+    <Compile Include="Helpers\Helper.cs" />
     <Compile Include="Migrations\202201100713198_Initial.cs" />
     <Compile Include="Migrations\202201100713198_Initial.designer.cs">
       <DependentUpon>202201100713198_Initial.cs</DependentUpon>
@@ -142,9 +160,26 @@
     <Compile Include="Migrations\202201100719227_Added-Brand-and-Model.designer.cs">
       <DependentUpon>202201100719227_Added-Brand-and-Model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201120856443_Added-Regions.cs" />
+    <Compile Include="Migrations\202201120856443_Added-Regions.designer.cs">
+      <DependentUpon>202201120856443_Added-Regions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201120903159_Added-Province.cs" />
+    <Compile Include="Migrations\202201120903159_Added-Province.designer.cs">
+      <DependentUpon>202201120903159_Added-Province.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201120937557_Added-municipality.cs" />
+    <Compile Include="Migrations\202201120937557_Added-municipality.designer.cs">
+      <DependentUpon>202201120937557_Added-municipality.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201120942346_Added-Brgy.cs" />
+    <Compile Include="Migrations\202201120942346_Added-Brgy.designer.cs">
+      <DependentUpon>202201120942346_Added-Brgy.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Brand.cs" />
     <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\Addresses.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -153,6 +188,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\logo.png" />
     <Content Include="Content\template\assets\css\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\template\assets\css\bootstrap.min.css" />
     <Content Include="Content\template\assets\css\style.css" />
@@ -613,6 +649,10 @@
     <Content Include="Content\template\assets\plugins\summernote\font\summernote.ttf" />
     <Content Include="Content\template\assets\plugins\summernote\font\summernote.woff" />
     <Content Include="Content\template\assets\plugins\summernote\font\summernoted41d.eot" />
+    <Content Include="Content\refbrgy.json" />
+    <Content Include="Content\refcitymun.json" />
+    <Content Include="Content\refprovince.json" />
+    <Content Include="Content\refregion.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -639,6 +679,8 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ShopInformation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -662,6 +704,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201100719227_Added-Brand-and-Model.resx">
       <DependentUpon>202201100719227_Added-Brand-and-Model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201120856443_Added-Regions.resx">
+      <DependentUpon>202201120856443_Added-Regions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201120903159_Added-Province.resx">
+      <DependentUpon>202201120903159_Added-Province.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201120937557_Added-municipality.resx">
+      <DependentUpon>202201120937557_Added-municipality.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201120942346_Added-Brgy.resx">
+      <DependentUpon>202201120942346_Added-Brgy.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

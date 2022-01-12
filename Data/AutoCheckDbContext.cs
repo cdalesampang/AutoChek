@@ -16,6 +16,11 @@ namespace AutoChek.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Model> Models { get; set; }
+        public DbSet<Region> Regions { get; set; }
+        public DbSet<Province> Provinces { get; set; }
+        public DbSet<Municipality> Municipalities { get; set; }
+        public DbSet<Barangay> Barangays { get; set; }
+
 
     }
 }

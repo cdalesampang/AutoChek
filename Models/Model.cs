@@ -12,6 +12,6 @@ namespace AutoChek.Models
         public string Name { get; set; }
         public int BrandId { get; set; }
         [ForeignKey("BrandId")]
-        public Brand Brand { get; set; }
+        public virtual Brand Brand { get; set; }
     }
 }
