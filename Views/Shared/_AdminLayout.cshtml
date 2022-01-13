@@ -28,8 +28,8 @@
                     <img src="~/Content/logo.png" alt="Logo">
                 </a>
                 @*<a href="index.html" class="logo logo-small">
-                    <img src="~/Content/template/assets/img/logo-small.png" alt="Logo" width="30" height="30">
-                </a>*@
+                        <img src="~/Content/template/assets/img/logo-small.png" alt="Logo" width="30" height="30">
+                    </a>*@
             </div>
 
 
@@ -69,8 +69,8 @@
                 <div id="sidebar-menu" class="sidebar-menu">
                     <ul>
                         <li class="menu-title"><span>Main</span></li>
-                        <li class="active">
-                            <a href="index.html"><i data-feather="home"></i> <span>Dashboard</span></a>
+                        <li>
+                            <a href="~/Manage/Index"><i data-feather="home"></i> <span>Dashboard</span></a>
                         </li>
                         <li>
                             <a href="customers.html"><i data-feather="users"></i> <span>Customers</span></a>
@@ -81,20 +81,19 @@
                         <li>
                             <a href="invoices.html"><i data-feather="clipboard"></i> <span>Invoices</span></a>
                         </li>
-                        
+
                         <li class="submenu">
                             <a href="#">
                                 <i data-feather="settings"></i> <span> Manage</span> <span class="menu-arrow"></span>
                             </a>
                             <ul>
                                 <li><a href="~/Manage/ShopInformation">Shop Information</a></li>
-                                <li><a href="#">Car Make</a></li>
-                                <li><a href="#">Car Models</a></li>
+                                <li><a href="~/Manage/CarMakers">Car Make/Model</a></li>
                                 <li><a href="#">Services</a></li>
                                 <li><a href="#">Parts</a></li>
                             </ul>
                         </li>
-                     
+
                     </ul>
                 </div>
             </div>
@@ -102,6 +101,7 @@
 
         <div class="page-wrapper">
             <div class="content container-fluid">
+                @Html.Raw(TempData["msg"])
                 @RenderBody()
             </div>
         </div>
@@ -110,17 +110,56 @@
 
 
     <script src="~/Content/template/assets/js/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
 
     <script src="~/Content/template/assets/js/bootstrap.bundle.min.js"></script>
 
     <script src="~/Content/template/assets/js/feather.min.js"></script>
 
     <script src="~/Content/template/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-    <script src="~/Content/template/assets/plugins/apexchart/apexcharts.min.js"></script>
-    <script src="~/Content/template/assets/plugins/apexchart/chart-data.js"></script>
-
     <script src="~/Content/template/assets/js/script.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var anchor = $('#sidebar-menu').find('a[href="' + location.pathname + '"]');
+            if ($(anchor).parents("li.submenu").length > 0) {
+                $(anchor).parents("li.submenu").addClass('active');
+                $(anchor).addClass("active");
+            }
+            else {
+                $(anchor).parent('li').addClass('active');
+            }
+            $('#sidebar-menu ul li.submenu a.active').parents('li:last').children('a:first').addClass('active').trigger('click');
+        });
+
+        function makeAjaxCall(wsUrl, params, sCallBack) {
+            $.ajax({
+                type: "POST",
+                url: wsUrl,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(params),
+                success: sCallBack,
+                error: function (xhr) {
+                    ajaxUnsuccessfulMsg();
+                }
+            });
+        }
+
+        function swalDeleted(name) {
+            Swal.fire(
+                'Deleted!',
+                name + ' has been deleted.',
+                'success'
+            ).then((result)=> {
+                location.reload();
+            })
+        }
+
+    </script>
+
+
+    
     @RenderSection("scripts", required: false)
 </body>
 </html>

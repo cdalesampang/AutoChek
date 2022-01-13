@@ -13,41 +13,9 @@ namespace AutoChek.Controllers
     public class HomeController : Controller
     {
 
-
-        public class Records
-        {
-            public List<RegionVM> Regions { get; set; }
-        }
-      
       
         public ActionResult Index()
         {
-            StreamReader streamReader = new StreamReader(Server.MapPath("~/Content/refbrgy.json"));
-
-            string data = streamReader.ReadToEnd();
-            var results = JsonConvert.DeserializeObject<dynamic>(data);
-
-            var records = results["RECORDS"].ToString();
-            List<BarangayVM> regions = JsonConvert.DeserializeObject<List<BarangayVM>>(records);
-
-            using (var db = new AutoCheckDbContext())
-            {
-                foreach (var region in regions)
-                {
-                    var region1 = db.Municipalities.FirstOrDefault(x => x.Code == region.citymunCode);
-
-                    Barangay data1 = new Barangay
-                    {
-                        Code = region.brgyCode,
-                        Description = region.brgyDesc,
-                        Id = region.Id,
-                        MunicipalityId = region1.Id
-                    };
-                    db.Barangays.Add(data1);
-                }
-                db.SaveChanges();
-            }
-
             return View();
         }
 

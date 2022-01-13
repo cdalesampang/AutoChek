@@ -1,83 +1,197 @@
-﻿
+﻿@model AutoChek.ViewModel.ShopVM
 @{
     ViewBag.Title = "Shop Information";
 }
+<link rel="stylesheet" href="~/Content/template/assets/plugins/select2/css/select2.min.css">
 
 <div class="row">
     <div class="col-md-6 offset-md-3">
         <div class="card">
-            <div class="card-header bg-primary"">
+            <div class="card-header bg-primary" ">
                 <h5 class="card-title mb-0 text-white">Shop Information</h5>
             </div>
-            <div class="card-body">
-                <div class="form-group">
-                    <label>Business Name</label>
-                    <input id="shop" name="shop" type="text"  class="form-control" placeholder="Enter Business Name">
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Contact Number</label>
-                            <input id="contactno" name="contactno" type="text" class="form-control" placeholder="Enter Contact Number">
-                        </div>
-                        <div class="col-md-6">
-                            <label>Email Address</label>
-                            <input id="email" name="email" type="email" class="form-control" placeholder="Enter Email Address">
-                        </div>
-                    </div>
-                </div>
+            @using (Html.BeginForm("ShopInfo", "Manage", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
 
-                <div>
-                    <h5>Address Information</h5>    
+                <div class="card-body">
                     <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>Region</label>
-                                <select id="region" name="region" class="form-select" required>
-                                    <option value="1">Region 1</option>
-                                    <option value="1">Region 2</option>
-                                    <option value="1">Region 3</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label>City</label>
-                                <select id="city" name="city" class="form-select" required>
-                                    <option value="1">City 1</option>
-                                    <option value="1">City 2</option>
-                                    <option value="1">City 3</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label>District</label>
-                                <select id="district" name="district" class="form-select" required>
-                                    <option value="1">District 1</option>
-                                    <option value="1">District 2</option>
-                                    <option value="1">District 3</option>
-                                </select>
-                            </div>
-                        </div>
+                        <label>Business Name</label>
+                        <input id="shop" name="shop" type="text" class="form-control" placeholder="Enter Business Name" value="@Model.Shop.Name">
                     </div>
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-md-4">
-                                <label>Street/Building Name</label>
-                                <input id="street" name="street" class="form-control"  required/>
+                            <div class="col-md-6">
+                                <label>Contact Number</label>
+                                <input id="contactno" name="contactno" type="text" class="form-control" placeholder="Enter Contact Number" value="@Model.Shop.ContactNo">
                             </div>
-                            <div class="col-md-4">
-                                <label>Unit Number</label>
-                                <input id="unitno" name="unitno" class="form-control"  required/>
-                            </div>
-                            <div class="col-md-4">
-                                <label>Postal Code</label>
-                                <input id="postal" name="postal" class="form-control" required />
+                            <div class="col-md-6">
+                                <label>Email Address</label>
+                                <input id="email" name="email" type="email" class="form-control" placeholder="Enter Email Address" value="@Model.Shop.Email">
                             </div>
                         </div>
                     </div>
+
+                    <div>
+                        <h5>Address Information</h5>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Province</label>
+                                    <select id="province" name="province" class="select2  shop-select2" required>
+                                        @if (Model.Shop.Province != null)
+                                        {
+                                            <option value="@Model.Shop.ProvinceId">@Model.Shop.Province.Description</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Municipality</label>
+                                    <select id="city" name="city" class="select2  shop-select2" required disabled>
+                                        @if (Model.Shop.City != null)
+                                        {
+                                            <option value="@Model.Shop.CityId">@Model.Shop.City.Description</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Brgy</label>
+                                    <select id="brgy" name="brgy" class="select2 shop-select2" required disabled>
+                                        @if (Model.Shop.Barangay != null)
+                                        {
+                                            <option value="@Model.Shop.BrgyId">@Model.Shop.Barangay.Description</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Street/Building Name</label>
+                                    <input id="street" name="street" class="form-control" required value="@Model.Shop.Street"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>House/Unit #</label>
+                                    <input id="unitno" name="unitno" class="form-control" value="@Model.Shop.UnitNo" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Postal Code</label>
+                                    <input id="postal" name="postal" class="form-control" required value="@Model.Shop.ZipCode" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-
-            </div>
-
+                <div class="card-footer">
+                    <button class="btn btn-primary" type="submit">Save Changes </button>
+                </div>
+            }
         </div>
     </div>
 
 </div>
+
+@section scripts {
+    <script src="~/Content/template/assets/plugins/select2/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function (ev) {
+
+            $('#province').select2({
+                ajax: {
+                    delay: 250,
+                    dataType: 'json',
+                    url: '@Url.Action("GetProvinces","Dropdown")',
+                    data: function (params) {
+                        var query = {
+                            keyword: params.term
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    },
+                    processResults: function (data) {
+                        $("#city").removeAttr("disabled");
+
+                        // Transforms the top-level key of the response object from 'items' to 'results'
+                        return {
+
+                            results: data.items
+                        };
+                    }
+                },
+                placeholder: 'Search Province',
+
+            });
+
+            
+            $('#province').on('select2:select', function (e) {
+                var data = e.params.data;
+                $("#city").removeAttr("disabled");
+                if (data) {
+                    
+                    $('#city').val(null).trigger('change');
+                    $('#brgy').val(null).trigger('change');
+                }
+            });
+
+            $('#city').on('select2:select', function (e) {
+                var data = e.params.data;
+                if (data) {
+                    $("#brgy").removeAttr("disabled");
+                    $('#brgy').val(null).trigger('change');
+                }
+            });
+
+             $('#city').select2({
+                ajax: {
+                    delay: 250,
+                    dataType: 'json',
+                    url: '@Url.Action("GetMunicipalities", "Dropdown")',
+                    data: function (params) {
+                        var query = {
+                            keyword: params.term,
+                            provinceId: Number($('#province').find(':selected').val())
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    },
+                    processResults: function (data) {
+                        // Transforms the top-level key of the response object from 'items' to 'results'
+                        return {
+                            results: data.items
+                        };
+                    }
+                },
+                placeholder: 'Search Municipality',
+            });
+
+            $('#brgy').select2({
+                ajax: {
+                    delay: 250,
+                    dataType: 'json',
+                    url: '@Url.Action("GetBrgys", "Dropdown")',
+                    data: function (params) {
+                        var query = {
+                            keyword: params.term,
+                            cityId: Number($('#city').find(':selected').val())
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    },
+                    processResults: function (data) {
+                        // Transforms the top-level key of the response object from 'items' to 'results'
+                        return {
+                            results: data.items
+                        };
+                    }
+                },
+                placeholder: 'Search Barangay',
+            });
+
+        });
+    </script>
+}

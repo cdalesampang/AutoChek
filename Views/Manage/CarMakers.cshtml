@@ -1,0 +1,251 @@
+﻿@model AutoChek.ViewModel.CarMakerVM
+@{
+    ViewBag.Title = "CarMakers";
+}
+<link href="~/Content/template/assets/plugins/select2/css/select2.min.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary">
+                <div class="card-title ">
+                    <div class="row">
+                        <div class="col-9">
+                            <h5 class="text-white">Car Makers</h5>
+                        </div>
+                        <div class="col-3">
+                            <button class="btn btn-success" onclick="showEditModal(0,'@String.Empty')">Add New</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table  table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Makers)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.Name</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info text-white btn-editCar" onclick="showEditModal(@item.Id,'@item.Name')"><span><i class="fa fa-edit" data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-edit" aria-label="Edit"></i> Edit</span></button>
+                                        <button class="btn btn-sm btn-danger text-white" onclick="deleteMaker(@item.Id,'@item.Name')"><span><i class="fa fa-trash" data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-trash" aria-label="Edit"></i> Delete</span></button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary">
+                <div class="card-title ">
+                    <div class="row">
+                        <div class="col-9">
+                            <h5 class="text-white">Car Models</h5>
+                        </div>
+                        <div class="col-3">
+                            <button class="btn btn-success" onclick="showAddModelModal(0,'@String.Empty',0,'@String.Empty')">Add New</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table  table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Maker</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Models)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.Name</td>
+                                    <td>@item.Brand.Name</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info text-white btn-editCar" onclick="showAddModelModal(@item.Id,'@item.Name',@item.BrandId, '@item.Brand.Name')"><span><i class="fa fa-edit" data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-edit" aria-label="Edit"></i> Edit</span></button>
+                                        <button class="btn btn-sm btn-danger text-white" onclick="deleteModel(@item.Id,'@item.Name')"><span><i class="fa fa-trash" data-bs-toggle="tooltip" title="" data-bs-original-title="fa fa-trash" aria-label="Edit"></i> Delete</span></button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Car Make Modal -->
+<div class="modal fade" id="carMakeModal" tabindex="-1" aria-labelledby="carMakeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("CarMaker", "Manage", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <h5 class="modal-title" id="carMakeModalLabel">Car Make</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input id="name" name="name" type="text" class="form-control" placeholder="Enter Car Maker" />
+                        <input id="makerId" name="makerId" type="hidden" class="form-control" placeholder="Enter Car Maker" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<!-- Car Model Modal -->
+<div class="modal fade" id="carModelModal" tabindex="-1" aria-labelledby="carModelModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("AddCarModel", "Manage", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <h5 class="modal-title" id="carMakeModalLabel">Car Model</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label>Maker</label>
+                        <select id="maker" name="makerId" class="select2  maker-select2" required>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input id="name" name="name" type="text" class="form-control" placeholder="Enter Car Maker" />
+                        <input id="modelId" name="id" type="hidden" class="form-control" placeholder="Enter Car Model" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Content/template/assets/plugins/select2/js/select2.min.js"></script>
+    <script src="~/Content/template/assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
+    <script>
+        function showEditModal(id, name) {
+            $("#carMakeModal #makerId").val(id);
+            $("#carMakeModal #name").val(name);
+            $("#carMakeModal").modal("show");
+        }
+
+        function showAddModelModal(id,name,makerId,makerName) {
+
+            $("#carModelModal #modelId").val(id);
+            $("#carModelModal #name").val(name);
+            $("#carModelModal").modal("show");
+            if (makerId) {
+                $("#maker").append("<option value=" + makerId + ">" + makerName + "</option>");
+            }
+        }
+        function deleteMaker(id, name) {
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Delete " + name + "? All Data connected to Ford will be deleted. You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var params = {id:id}
+                    makeAjaxCall('@Url.Action("DeleteMaker","Manage")', params, swalDeleted("Maker"))
+
+
+                }
+            })
+
+        }
+
+         function deleteModel(id, name) {
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Delete " + name + "? All Data connected to Ford will be deleted. You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var params = {id:id}
+                    makeAjaxCall('@Url.Action("DeleteModel","Manage")', params, swalDeleted("Model"))
+
+
+                }
+            })
+
+        }
+        $(document).ready(function () {
+            $('#maker').select2({
+                dropdownParent: $("#carModelModal"),
+                ajax: {
+                    delay: 250,
+                    dataType: 'json',
+                    url: '@Url.Action("GetCarMakers","Dropdown")',
+                    data: function (params) {
+                        var query = {
+                            keyword: params.term
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    },
+                    processResults: function (data) {
+                        // Transforms the top-level key of the response object from 'items' to 'results'
+                        return {
+                            results: data.items
+                        };
+                    }
+                },
+                placeholder: 'Search Maker',
+
+            });
+
+
+        });
+    </script>
+
+
+}

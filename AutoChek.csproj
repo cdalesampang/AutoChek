@@ -143,6 +143,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DropDownController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Data\AutoCheckDbContext.cs" />
@@ -176,12 +177,20 @@
     <Compile Include="Migrations\202201120942346_Added-Brgy.designer.cs">
       <DependentUpon>202201120942346_Added-Brgy.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201130452023_Added-Shops.cs" />
+    <Compile Include="Migrations\202201130452023_Added-Shops.designer.cs">
+      <DependentUpon>202201130452023_Added-Shops.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Brand.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\Addresses.cs" />
+    <Compile Include="Models\Shop.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\CarMakerVM.cs" />
+    <Compile Include="ViewModel\DropdownVM.cs" />
+    <Compile Include="ViewModel\ShopVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -681,9 +690,11 @@
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Manage\ShopInformation.cshtml" />
+    <Content Include="Views\Manage\CarMakers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\DropDown\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -716,6 +727,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201120942346_Added-Brgy.resx">
       <DependentUpon>202201120942346_Added-Brgy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201130452023_Added-Shops.resx">
+      <DependentUpon>202201130452023_Added-Shops.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

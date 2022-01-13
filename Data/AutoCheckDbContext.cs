@@ -20,6 +20,7 @@ namespace AutoChek.Data
         public DbSet<Province> Provinces { get; set; }
         public DbSet<Municipality> Municipalities { get; set; }
         public DbSet<Barangay> Barangays { get; set; }
+        public DbSet<Shop> Shops { get; set; }
 
 
     }

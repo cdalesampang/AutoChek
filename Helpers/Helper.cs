@@ -11,7 +11,7 @@ namespace AutoChek.Helpers
     {
         public static readonly string adminCookie = "autoChekAdmin";
 
-        public string DecryptUserCookie(string cookieName)
+        public static string DecryptUserCookie(string cookieName)
         {
             var bytes = Convert.FromBase64String(HttpContext.Current.Request.Cookies[cookieName].Value);
             var output = MachineKey.Unprotect(bytes, "info");
@@ -28,6 +28,11 @@ namespace AutoChek.Helpers
                 userCookie.Expires = DateTime.Now.AddDays(expiry);
             }
             HttpContext.Current.Response.Cookies.Add(userCookie);
+        }
+        public static int GetAdminId()
+        {
+            string cookie = DecryptUserCookie(adminCookie);
+            return Convert.ToInt32(cookie[0]);
         }
 
     }
